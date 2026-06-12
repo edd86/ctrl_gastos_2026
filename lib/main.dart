@@ -1,4 +1,5 @@
 import 'package:ctrl_gastos/core/data/db_helper.dart';
+import 'package:ctrl_gastos/core/routes/app_routes.dart';
 import 'package:ctrl_gastos/core/theme/ctrl_gastos_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ctrl Gastos',
+      routes: AppRoutes.routes,
+      initialRoute: AppRoutes.auth,
       theme: CtrlGastosTheme.lightTheme,
       darkTheme: CtrlGastosTheme.darkTheme,
-      home: const Scaffold(body: Center(child: Text('Controla tus gastos'))),
     );
   }
 }

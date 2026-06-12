@@ -21,6 +21,7 @@ List<String> tables = [
     user_id INTEGER NOT NULL,
     account_id INTEGER NOT NULL, 
     amount REAL NOT NULL CHECK(amount > 0),
+    transactio_date TEXT NOT NULL,
     type TEXT NOT NULL CHECK(type IN('transfer', 'deposit', 'cash', 'income', 'expense')),
     description TEXT,
     destination_id INTEGER,
