@@ -1,3 +1,4 @@
+import 'package:ctrl_gastos/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
@@ -68,7 +69,9 @@ class _AuthPageState extends State<AuthPage> {
               ),
               SizedBox(height: 15),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.userForm);
+                },
                 child: Text('Registrarse', style: TextStyle(fontSize: 16)),
               ),
             ],

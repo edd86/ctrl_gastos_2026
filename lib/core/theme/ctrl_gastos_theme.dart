@@ -17,28 +17,37 @@ class CtrlGastosTheme {
   static const Color _onSurfaceDark = Color(0xFFE6E1E5);
 
   static ThemeData get lightTheme => ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.light(
-          primary: _primaryLight,
-          onPrimary: Colors.white,
-          primaryContainer: _primaryContainerLight,
-          secondary: _secondaryLight,
-          secondaryContainer: _secondaryContainerLight,
-          surface: _surfaceLight,
-          onSurface: _onSurfaceLight,
-        ),
-      );
+    useMaterial3: true,
+    colorScheme: ColorScheme.light(
+      primary: _primaryLight,
+      onPrimary: Colors.white,
+      primaryContainer: _primaryContainerLight,
+      secondary: _secondaryLight,
+      secondaryContainer: _secondaryContainerLight,
+      surface: _surfaceLight,
+      onSurface: _onSurfaceLight,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _primaryContainerDark,
+        foregroundColor: _onSurfaceLight,
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        textStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+      ),
+    ),
+  );
 
   static ThemeData get darkTheme => ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.dark(
-          primary: _primaryDark,
-          onPrimary: Colors.white,
-          primaryContainer: _primaryContainerDark,
-          secondary: _secondaryDark,
-          secondaryContainer: _secondaryContainerDark,
-          surface: _surfaceDark,
-          onSurface: _onSurfaceDark,
-        ),
-      );
+    useMaterial3: true,
+    colorScheme: ColorScheme.dark(
+      primary: _primaryDark,
+      onPrimary: Colors.white,
+      primaryContainer: _primaryContainerDark,
+      secondary: _secondaryDark,
+      secondaryContainer: _secondaryContainerDark,
+      surface: _surfaceDark,
+      onSurface: _onSurfaceDark,
+    ),
+  );
 }
