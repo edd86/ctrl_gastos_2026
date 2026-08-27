@@ -1,4 +1,6 @@
 import 'package:ctrl_gastos/core/widgets/custom_text_field.dart';
+import 'package:ctrl_gastos/features/users/data/repo_impl/user_repo_impl.dart';
+import 'package:ctrl_gastos/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 
 class UserForm extends StatefulWidget {
@@ -17,6 +19,8 @@ class _UserFormState extends State<UserForm> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +39,12 @@ class _UserFormState extends State<UserForm> {
                   hintText: 'Ej: Juan Carlos',
                   prefixIcon: Icon(Icons.person),
                   textCapitalization: TextCapitalization.words,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese su nombre';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: _fieldSpacing),
                 CustomTextField(
@@ -43,6 +53,12 @@ class _UserFormState extends State<UserForm> {
                   hintText: 'Ej: Caballero Torrez',
                   prefixIcon: Icon(Icons.person),
                   textCapitalization: TextCapitalization.words,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese sus apellidos';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: _fieldSpacing),
                 CustomTextField(
@@ -51,6 +67,12 @@ class _UserFormState extends State<UserForm> {
                   hintText: 'Ej: email@extend.com',
                   prefixIcon: Icon(Icons.email),
                   keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese su correo electrónico';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: _fieldSpacing),
                 CustomTextField(
@@ -59,6 +81,12 @@ class _UserFormState extends State<UserForm> {
                   hintText: 'Ej: 60660006',
                   prefixIcon: Icon(Icons.phone),
                   keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese su número de teléfono';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: _fieldSpacing),
                 CustomTextField(
@@ -66,11 +94,57 @@ class _UserFormState extends State<UserForm> {
                   controller: _passwordController,
                   hintText: 'Ej: ********',
                   prefixIcon: Icon(Icons.password),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscure ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                  ),
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: _isObscure,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese su contraseña';
+                    }
+                    return null;
+                  },
                 ),
                 ElevatedButton(
-                  onPressed: () {},
                   child: Text('Guardar Usuario'),
+                  onPressed: () async {
+                    if (!_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Por favor complete todos los campos correctamente',
+                          ),
+                        ),
+                      );
+                    }
+                    final userInfo = UserEntity(
+                      name: _nameController.text,
+                      lastName: _lastNameController.text,
+                      email: _emailController.text,
+                      phone: _phoneController.text,
+                      password: _passwordController.text,
+                    );
+                    final userRepo = UserRepoImpl();
+                    final isCreated = await userRepo.createUser(userInfo);
+                    if (isCreated) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Usuario creado exitosamente')),
+                      );
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error al crear el usuario')),
+                      );
+                    }
+                  },
                 ),
               ],
             ),
