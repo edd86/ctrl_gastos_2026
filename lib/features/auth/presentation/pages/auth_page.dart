@@ -1,4 +1,6 @@
 import 'package:ctrl_gastos/core/routes/app_routes.dart';
+import 'package:ctrl_gastos/features/auth/data/repo_impl/auth_repo_impl.dart';
+import 'package:ctrl_gastos/features/auth/domain/entities/auth_info_entity.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
@@ -9,6 +11,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool isObscure = true;
 
   @override
@@ -39,6 +43,7 @@ class _AuthPageState extends State<AuthPage> {
               ),
               SizedBox(height: 30),
               TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Correo electrónico',
                   border: OutlineInputBorder(),
@@ -46,6 +51,7 @@ class _AuthPageState extends State<AuthPage> {
               ),
               SizedBox(height: 20),
               TextField(
+                controller: _passwordController,
                 obscureText: isObscure,
                 decoration: InputDecoration(
                   labelText: 'Contraseña',
@@ -64,8 +70,28 @@ class _AuthPageState extends State<AuthPage> {
               ),
               SizedBox(height: 35),
               ElevatedButton(
-                onPressed: () {},
                 child: Text('Iniciar sesión', style: TextStyle(fontSize: 18)),
+                onPressed: () async {
+                  final repo = AuthRepoImpl();
+                  final authInfo = AuthInfoEntity(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
+                  try {
+                    final isAuthenticated = await repo.login(authInfo);
+                    if (isAuthenticated) {
+                      Navigator.pushReplacementNamed(context, AppRoutes.home);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Credenciales incorrectas')),
+                      );
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error: ${e.toString()}')),
+                    );
+                  }
+                },
               ),
               SizedBox(height: 15),
               TextButton(
