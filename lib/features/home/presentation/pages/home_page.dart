@@ -1,5 +1,7 @@
+import 'package:ctrl_gastos/core/data/demo_data.dart';
 import 'package:ctrl_gastos/features/home/presentation/widgets/amount_card.dart';
 import 'package:ctrl_gastos/features/home/presentation/widgets/income_expense_card.dart';
+import 'package:ctrl_gastos/features/home/presentation/widgets/recent_activity_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -43,7 +45,13 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 10, width: double.infinity),
             AmountCard(size: size, totalAmount: 500.00),
             const SizedBox(height: 10),
-            IncomeExpenseCard(size: size),
+            IncomeExpenseCard(
+              size: size,
+              incomeAmount: 5000.00,
+              expenseAmount: 500.00,
+            ),
+            const SizedBox(height: 20),
+            RecentActivityWidget(transactions: demoTransactions),
           ],
         ),
       ),

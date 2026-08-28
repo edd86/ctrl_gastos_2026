@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 
 class IncomeExpenseCard extends StatelessWidget {
   final Size size;
-  const IncomeExpenseCard({required this.size, super.key});
+  final double incomeAmount;
+  final double expenseAmount;
+  const IncomeExpenseCard({
+    required this.size,
+    required this.incomeAmount,
+    required this.expenseAmount,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +50,7 @@ class IncomeExpenseCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Ingresos',
+                    'Ingreso mensual',
                     style: TextStyle(
                       fontSize: 18.85,
                       fontWeight: FontWeight.bold,
@@ -60,7 +67,7 @@ class IncomeExpenseCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '5000.00',
+                        '$incomeAmount',
                         style: TextStyle(
                           fontSize: 25.85,
                           fontWeight: FontWeight.bold,
@@ -107,7 +114,7 @@ class IncomeExpenseCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Egresos',
+                    'Egreso Mensual',
                     style: TextStyle(
                       fontSize: 18.85,
                       fontWeight: FontWeight.bold,
@@ -124,7 +131,7 @@ class IncomeExpenseCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '500.00',
+                        '$expenseAmount',
                         style: TextStyle(
                           fontSize: 25.85,
                           fontWeight: FontWeight.bold,
