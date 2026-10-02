@@ -11,12 +11,12 @@ List<String> tables = [
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     amount REAL DEFAULT 0.0 CHECK(amount >= 0),
-    type TEXT NOT NULL CHECK(type IN('bank', 'cash', 'saving', 'investment')),
+    type TEXT NOT NULL CHECK(type IN('bank', 'cash', 'saving')),
     currency TEXT NOT NULL CHECK(currency IN('USD', 'EUR', 'BOB')),
     user_id INTEGER NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
   )''',
-  '''CREATE TABLE transactionss(
+  '''CREATE TABLE transactions(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     account_id INTEGER NOT NULL, 

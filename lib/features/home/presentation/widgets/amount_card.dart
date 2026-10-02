@@ -1,3 +1,4 @@
+import 'package:ctrl_gastos/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class AmountCard extends StatelessWidget {
@@ -63,12 +64,42 @@ class AmountCard extends StatelessWidget {
                     backgroundColor: Colors.green,
                     foregroundColor: Colors.green[900],
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialogMessage(context);
+                  },
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void showDialogMessage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Ingrese la cantidad de Monto a Agregar'),
+        content: CustomTextField(
+          labelText: 'Monto',
+          keyboardType: TextInputType.number,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Aquí puedes agregar la lógica para manejar el monto ingresado
+              Navigator.of(context).pop();
+            },
+            child: Text('Agregar'),
+          ),
+        ],
       ),
     );
   }
